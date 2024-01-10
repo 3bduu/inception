@@ -17,11 +17,11 @@ ps:
 	docker ps
 
 clean : down
-	docker volume rm wordpress-dbase mariadb-dbase
+	docker volume rm wordpress mariadb
 
 fclean : clean
 	docker system prune -af
-	sudo rm -fr /home/abenlahb/data/wordpress-dbase/*
-	sudo rm -fr /home/abenlahb/data/mariadb-dbase/*
+	sudo rm -fr /home/abenlahb/data/wordpress/*
+	sudo rm -fr /home/abenlahb/data/mariadb/*
 
 re : fclean all

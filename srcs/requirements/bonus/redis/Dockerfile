@@ -9,5 +9,6 @@ RUN chmod +x script.sh
 
 EXPOSE 6379
 
+ENTRYPOINT [ "./script.sh" ]
 
-CMD [ "./script.sh" ]
+CMD [ "redis-server","--protected-mode","no" ]

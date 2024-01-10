@@ -15,4 +15,4 @@ EXPOSE 3306
 
 ENTRYPOINT [ "/usr/local/bin/mariadb.sh" ]
 # Start MariaDB when the container starts
-# CMD ["mysqld_safe"]
+CMD ["mysqld_safe"]

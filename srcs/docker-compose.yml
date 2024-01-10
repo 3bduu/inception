@@ -2,19 +2,19 @@ version: '3.8'
 
 services:
   nginx:
-    container_name: nginx-container
+    container_name: nginx
     build: requirements/nginx
     ports:
-      - 443:443
+      - "443:443"
     depends_on:
       - wordpress
     restart: always
     volumes:
-      - wordpress-dbase:/var/www/html/wordpress
+      - wordpress:/var/www/html/wordpress
     networks:
       - my_network
   wordpress:
-    container_name: wordpress-container
+    container_name: wordpress
     build: requirements/wordpress
     restart: always
     depends_on:
@@ -22,17 +22,17 @@ services:
     env_file:
       - .env
     volumes:
-      - wordpress-dbase:/var/www/html/wordpress
+      - wordpress:/var/www/html/wordpress
     networks:
       - my_network
   mariadb:
-    container_name: mariadb-container
+    container_name: mariadb
     build: requirements/mariadb
     restart: always
     env_file:
       - .env
     volumes:
-      - mariadb-dbase:/var/lib/mariadb
+      - mariadb:/var/lib/mariadb
     networks:
       - my_network
   redis:
@@ -40,7 +40,7 @@ services:
     build: requirements/bonus/redis
     restart: always
     ports:
-      - 6379:6379
+      - "6379:6379"
     env_file:
       - .env
     networks:
@@ -50,9 +50,23 @@ services:
     build: requirements/bonus/website
     restart: always
     ports:
-      - 4000:4000
+      - "4000:4000"
     networks:
       - my_network
+  ftp:
+    container_name: ftp
+    build: requirements/bonus/ftp
+    restart: always
+    ports:
+      - "21:21"
+      - "20:20"
+      - "5000-5005:5000-5005"
+    networks:
+      - my_network
+    env_file:
+      - .env
+    volumes:
+      - wordpress:/var/www/html/wordpress
   adminer:
     container_name: adminer
     build: requirements/bonus/adminer
@@ -60,9 +74,9 @@ services:
     depends_on:
       - mariadb
     volumes:
-      - wordpress-dbase:/var/www/html/wordpress
+      - wordpress:/var/www/html/wordpress
     ports:
-      - 7000:7000
+      - "7000:7000"
     networks:
       - my_network
   cadvisor:
@@ -70,30 +84,30 @@ services:
     build: requirements/bonus/cadvisor
     restart: always
     ports:
-      - 8080:8080
+      - "8080:8080"
     networks:
       - my_network
     volumes:
       - /:/rootfs:ro
-      - /var/run:/var/run:ro 
+      - /var/run:/var/run:ro
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
-networks:
+networks: 
   my_network:
     driver: bridge
 
 volumes:
-  wordpress-dbase:
-    name: wordpress-dbase
+  wordpress:
+    name: wordpress
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/abenlahb/data/wordpress-dbase
-  mariadb-dbase:
-    name: mariadb-dbase
+      device: /home/abenlahb/data/wordpress
+  mariadb:
+    name: mariadb
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/abenlahb/data/mariadb-dbase
+      device: /home/abenlahb/data/mariadb
