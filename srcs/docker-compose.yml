@@ -3,6 +3,7 @@ version: '3.8'
 services:
   nginx:
     container_name: nginx
+    image: nginx
     build: requirements/nginx
     ports:
       - "443:443"
@@ -15,6 +16,7 @@ services:
       - my_network
   wordpress:
     container_name: wordpress
+    image: wordpress
     build: requirements/wordpress
     restart: always
     depends_on:
@@ -27,6 +29,7 @@ services:
       - my_network
   mariadb:
     container_name: mariadb
+    image: mariadb
     build: requirements/mariadb
     restart: always
     env_file:
@@ -37,6 +40,7 @@ services:
       - my_network
   redis:
     container_name: redis
+    image: redis
     build: requirements/bonus/redis
     restart: always
     ports:
@@ -47,6 +51,7 @@ services:
       - my_network
   website:
     container_name: website
+    image: website
     build: requirements/bonus/website
     restart: always
     ports:
@@ -55,6 +60,7 @@ services:
       - my_network
   ftp:
     container_name: ftp
+    image: ftp
     build: requirements/bonus/ftp
     restart: always
     ports:
@@ -69,6 +75,7 @@ services:
       - wordpress:/var/www/html/wordpress
   adminer:
     container_name: adminer
+    image: adminer
     build: requirements/bonus/adminer
     restart: always
     depends_on:
@@ -81,6 +88,7 @@ services:
       - my_network
   cadvisor:
     container_name: cadvisor
+    image: cadvisor
     build: requirements/bonus/cadvisor
     restart: always
     ports:
