@@ -28,3 +28,13 @@ Before starting, ensure you have the following installed:
    ```bash
    git clone https://github.com/3bduu/inception.git
    cd inception42
+2. **Build the Docker images**:
+   ```bash
+   docker-compose build
+   
+4. **Start the services**:
+   ```bash
+   docker-compose up -d
+6. **Access the application**: Open your browser and navigate to:
+   ```bash
+   https://localhost:8080
